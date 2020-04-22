@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>javascript javascript javascript javascriptjavascriptjavascriptjavascript javascript</h1>
+  <script type='text/javascript'>
+    let array = []
+    for (let index = 0; index < 128; index++) {
+      const element = array[index];
+      // document.write(index+ ': <span> ' + String.fromCharCode(index) + '</span><br/>')
+      // var \u5389\u5bb3 = '11'
+      console.log(  	);
+      
+      // const span = 
+    }
+    var a = 0.1;
+    var b = 0.2;
+    const mem = new Float64Array(1)
+    mem[0] = a
+    const mem2 = new Uint8Array(mem.buffer)
+    console.log(mem,mem2);
+    for (let index = 0; index < 8; index++) {
+      let s = (mem2[index].toString(2));
+      console.log(new Array(9 - s.length).join('0')+s);
+      
+    }
+  </script>
+</body>
+</html>
