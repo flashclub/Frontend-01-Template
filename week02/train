@@ -1,0 +1,12 @@
+"a"
+
+"b"
+
+数字：
+<Number> = "1" | "2" | ....| "9"
+十进制数
+<DecimalNumber> = "0" | (("1" | "2" | ....| "9") <Number> * )
+加法
+<AdditiveExpression> = <DecimalNumber> | <Expression> "+" <DecimalNumber>
+乘法
+<MultiplicativeExpression> = <DecimalNumber> | <MultiplicativeExpression> "+" <DecimalNumber>
