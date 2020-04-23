@@ -1,34 +1,31 @@
-/**
- * @param {string} char
- * @return {string}
- */
-function charToUtf8(char) {
-  const binary = char.codePointAt().toString(2);
-  if (binary.length < 8) {
-    return binary.padStart(8, "0");
-  }
-  const headers = ["0", "110", "1110", "11110"];
-  const sequence = [];
-  for (let end = binary.length; end > 0; end -= 6) {
-    const sub = binary.slice(Math.max(end - 6, 0), end);
-
-    if (sub.length === 6) {
-      sequence.unshift(`10${sub}`);
-    } else {
-      const header = headers[sequence.length];
-      sequence.unshift(`${header}${sub.padStart(8 - header.length, "0")}`);
+function (string) {
+        var buffer = new Uint8Array(1000);
+        var i = 0;
+        for (var n = 0; n < string.length; n++) {
+            var c = string.charCodeAt(n);
+            if (c < 128) {
+                buffer[i] = c;
+                i++;
+            }
+            else if ((c > 127) && (c < 2048)) {
+                buffer[i] = (c >> 6) | 192;
+                buffer[i+1] = (c & 63) | 128;
+                i += 2;
+            }
+            else if ((c > 2047) && (c < 65536)) {
+                buffer[i] = (c >> 12) | 224;
+                buffer[i+1] = ((c >> 6) & 63) | 128;
+                buffer[i+2] = (c & 63) | 128;
+                i += 3;
+            }
+            else {
+                buffer[i] = (c >> 18) | 240;
+                buffer[i+1] = ((c >> 12) & 63) | 128;
+                buffer[i+2] = ((c >> 6) & 63) | 128;
+                buffer[i+3] = (c & 63) | 128;
+                i += 4;
+            }
+        }
+        
+        return buffer;
     }
-  }
-  return sequence.join("|");
-}
-
-/**
- * @param {string} str
- * @return {Array}
- */
-function utf8Encoding(str) {
-  return Array.from(str).map((char) => charToUtf8(char));
-}
-
-console.log(utf8Encoding("\u{7f}\u{7ff}\u{ffff}\u{10ffff}"));
-// ["01111111", "11011111|10111111", "11101111|10111111|10111111", "11110100|10001111|10111111|10111111"]
